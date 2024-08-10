@@ -15,6 +15,9 @@ namespace VendaCorp.Core.Entities
         public string OrderId { get; set; }
         public string Status { get; set; }
         public bool IsAproved { get; set; }
+        public int ShippningCompanyId { get; set; }
+
+        public virtual ShippingCompany ShippingCompany { get; set; }
 
         public SalesOrder()
         {

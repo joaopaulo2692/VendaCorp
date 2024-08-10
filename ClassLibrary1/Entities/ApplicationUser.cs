@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,7 +10,7 @@ namespace VendaCorp.Core.Entities
 {
     public class ApplicationUser : IdentityUser
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
 
         [Column("created_at")]

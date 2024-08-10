@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VendaCorp.Core.Entities
 {
-    public class Orders : BaseEntities
+    public class Order : BaseEntities
     {
         public int Id { get; set; }
         public string OrderCode { get; set; }
@@ -17,5 +17,9 @@ namespace VendaCorp.Core.Entities
         public string CustomerName { get; set; }
         public string CustomerDocument { get; set; }
         public string Status { get; set; }
+
+        public string EnterpriseId { get; set; }
+
+        public virtual Enterprise Enterprise { get; set; }
     }
 }
