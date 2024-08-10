@@ -15,5 +15,6 @@ namespace VendaCorp.Core.Interfaces.Repositories
         public Task<Result> CreateUser(ApplicationUser user);
         public Task<Result> RemoveUser(ApplicationUser user);
         public Task<List<ApplicationUser>> GetAllUsers();
+        public Task<ApplicationUser> GetById(string id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using VendaCorp.Core.Entities;
 using VendaCorp.Core.Interfaces.Repositories;
+using VendaCorp.Infrastructure.Data;
 
 namespace VendaCorp.Infrastructure.Repository
 {
     public class ApplicationUserRepository : IApplicationUserRepository
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _db;
 
-        public ApplicationUserRepository(SignInManager<ApplicationUser> signInManager)
+        public ApplicationUserRepository(SignInManager<ApplicationUser> signInManager, ApplicationDbContext db)
         {
             _signInManager = signInManager;
+            _db = db;
         }
 
         public async Task<Result> CreateUser(ApplicationUser user)
@@ -46,14 +50,29 @@ namespace VendaCorp.Infrastructure.Repository
             }
         }
 
-        public Task<List<ApplicationUser>> GetAllUsers()
+        public async Task<List<ApplicationUser>> GetAllUsers()
         {
-            throw new NotImplementedException();
+            List<ApplicationUser> users = await _db.Users.ToListAsync();
+
+            return users;
         }
 
-        public Task<Result> RemoveUser(ApplicationUser user)
+        public async Task<ApplicationUser> GetById(string id)
         {
-            throw new NotImplementedException();
+            ApplicationUser user = await _db.Users.Where(x => x.Id == id && x.DisabledAt == null).FirstOrDefaultAsync();
+            return user;
+        }
+
+        public async Task<Result> RemoveUser(ApplicationUser user)
+        {
+            ApplicationUser userDb = await _db.Users.Where(x => x.Id == user.Id && x.DisabledAt == null).FirstOrDefaultAsync();
+
+            userDb.UpdatedAt = DateTime.Now;
+            userDb.DisabledAt = DateTime.Now;
+
+            await _db.SaveChangesAsync();
+
+            return Result.Ok();
         }
     }
 }
