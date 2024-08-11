@@ -19,6 +19,8 @@ namespace VendaCorp.Core.Profiles
             CreateMap<ApplicationUser, UserCreateVO>()
                .ReverseMap();
 
+            CreateMap<ApplicationUser, LoginVO>()
+              .ReverseMap();
         }
     }
 }

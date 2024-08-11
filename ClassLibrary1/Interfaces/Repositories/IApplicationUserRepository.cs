@@ -17,5 +17,6 @@ namespace VendaCorp.Core.Interfaces.Repositories
         public Task<List<ApplicationUser>> GetAllAsync();
         public Task<ApplicationUser> GetByEmailAsync(string id);
         public Task<ApplicationUser> GetByIdAsync(string id);
+        public Task<Result> SignInUser(ApplicationUser user, string password);
     }
 }

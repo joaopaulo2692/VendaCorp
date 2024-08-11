@@ -88,5 +88,23 @@ namespace VendaCorp.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginVO loginVO)
+        {
+
+            try
+            {
+                Result response = await _userService.Login(loginVO);
+
+                return StatusCode(StatusCodes.Status200OK, response);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status404NotFound);
+            }
+        }
+
     }
 }

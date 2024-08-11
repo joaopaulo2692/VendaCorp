@@ -58,5 +58,24 @@ namespace VendaCorp.Infrastructure.Serivces
             UserVO userVO = _mapper.Map<UserVO>(user);
             return userVO;
         }
+
+        public async Task<Result> Login(LoginVO user)
+        {
+            try
+            {
+                ApplicationUser client = await _applicationRepo.GetByEmailAsync(user.Email);
+                if (client == null)
+                {
+                    return Result.Fail("Erro ao fazer Login");
+                }
+                Result response = await _applicationRepo.SignInUser(client, user.Password);
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Result.Fail("Erro ao fazer Login");
+            }
+        }
     }
 }

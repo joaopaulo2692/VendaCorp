@@ -80,5 +80,32 @@ namespace VendaCorp.Infrastructure.Repository
 
             return Result.Ok();
         }
+
+        public async Task<Result> SignInUser(ApplicationUser user, string password)
+        {
+            try
+            {
+                SignInResult result =
+                    await _signInManager
+                                .PasswordSignInAsync(
+                                    user,
+                                    password,
+                                    false,
+                                    false
+                                );
+
+                if (result.Succeeded)
+
+                    return Result.Ok();
+
+                else
+                    return Result.Fail("Login attempt failed");
+            }
+            catch (Exception ex)
+            {
+
+                return Result.Fail("Erro ao logar");
+            }
+        }
     }
 }

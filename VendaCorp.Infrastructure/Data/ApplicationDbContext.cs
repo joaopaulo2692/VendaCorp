@@ -23,7 +23,20 @@ namespace VendaCorp.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
-            
+            modelBuilder.Entity<SalesOrder>()
+            .HasOne(x => x.ShippingCompany)
+            .WithMany(x => x.SalesOrders);
+
+            modelBuilder.Entity<Enterprise>()
+            .HasMany(x => x.Orders)
+            .WithOne(x => x.Enterprise)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+            .HasOne(x => x.SalesOrder)
+            .WithOne(x => x.Order)
+            .OnDelete(DeleteBehavior.Cascade);
+
         }
 
 

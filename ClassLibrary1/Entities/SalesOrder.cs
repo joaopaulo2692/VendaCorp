@@ -9,14 +9,16 @@ namespace VendaCorp.Core.Entities
     public class SalesOrder
     {
         public string Id { get; set; }
+        public string OrderId { get; set; }
         public DateTime DeliveryDate { get; set; }
         public string CarrierName { get; set; }
-        public string CustomerAddress { get; set; }
-        public string OrderId { get; set; }
+        public string CustomerAddress { get; set; }       
         public string Status { get; set; }
         public bool IsAproved { get; set; }
         public int ShippningCompanyId { get; set; }
+     
 
+        public virtual Order Order { get; set; }
         public virtual ShippingCompany ShippingCompany { get; set; }
 
         public SalesOrder()
