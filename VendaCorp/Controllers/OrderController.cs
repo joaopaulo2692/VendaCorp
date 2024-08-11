@@ -1,7 +1,10 @@
 ﻿using FluentResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
+using System.Security.Claims;
 using VendaCorp.Application.DTO.Enterprise;
 using VendaCorp.Application.DTO.Order;
+using VendaCorp.Core.Entities;
 using VendaCorp.Core.Interfaces.Services;
 using VendaCorp.Infrastructure.Services;
 
@@ -40,5 +43,75 @@ namespace VendaCorp.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPost]
+        [Route("ApprovedAsync")]
+        public async Task<IActionResult> ApproveAsync(string orderId)
+        {
+            try
+            {
+                Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (idUser == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized);
+                }
+
+                Result response = await _orderService.ApproveAsync(orderId);
+                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest);
+
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [Route("CancellAsync")]
+        public async Task<IActionResult> CancellAsync(string orderId)
+        {
+            try
+            {
+                Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (idUser == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized);
+                }
+
+                Result response = await _orderService.CancellAsync(orderId);
+                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest);
+
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<IActionResult> GetByIdAsync(string orderId)
+        {
+            try
+            {
+                Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (idUser == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized);
+                }
+
+                Order response = await _orderService.GetById(orderId);
+                if (response == null) return StatusCode(StatusCodes.Status404NotFound);
+
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
     }
 }

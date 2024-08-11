@@ -104,7 +104,7 @@ namespace VendaCorp.API.Controllers
                 EnterpriseVO response = await _enterpriseService.GetById(id);
                 if (response == null) return StatusCode(StatusCodes.Status404NotFound);
 
-                return StatusCode(StatusCodes.Status200OK);
+                return StatusCode(StatusCodes.Status200OK, response);
             }
             catch (Exception ex)
             {
@@ -128,7 +128,7 @@ namespace VendaCorp.API.Controllers
                 EnterpriseVO response = await _enterpriseService.GetByLegalName(legalName);
                 if (response == null) return StatusCode(StatusCodes.Status404NotFound);
 
-                return StatusCode(StatusCodes.Status200OK);
+                return StatusCode(StatusCodes.Status200OK, response);
             }
             catch (Exception ex)
             {
@@ -151,7 +151,7 @@ namespace VendaCorp.API.Controllers
                 EnterpriseVO response = await _enterpriseService.GetByTradeName(tradeName);
                 if (response == null) return StatusCode(StatusCodes.Status404NotFound);
 
-                return StatusCode(StatusCodes.Status200OK);
+                return StatusCode(StatusCodes.Status200OK, response);
             }
             catch (Exception ex)
             {

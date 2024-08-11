@@ -26,14 +26,22 @@ namespace VendaCorp.Infrastructure.Services
             _productExtern = productExtern;
         }
 
-        public Task<Result> ApproveAsync(int orderId)
+        public async Task<Result> ApproveAsync(string orderId)
         {
-            throw new NotImplementedException();
+            Order order = await _orderRepository.GetById(orderId);
+            if (order == null) return Result.Fail("Erro ao buscar pedido por Id");
+
+            Result response = await _orderRepository.ApproveAsync(order);
+            return response;
         }
 
-        public Task<Result> CancellAsync(int orderId)
+        public async Task<Result> CancellAsync(string orderId)
         {
-            throw new NotImplementedException();
+            Order order = await _orderRepository.GetById(orderId);
+            if (order == null) return Result.Fail("Erro ao buscar pedido por Id");
+
+            Result response = await _orderRepository.CancellAsync(order);
+            return response;
         }
 
         public async Task<Result> CreateAsync(OrderCreateVO orderCreateVO)
@@ -95,6 +103,19 @@ namespace VendaCorp.Infrastructure.Services
                 return Result.Fail("Erro ao fazer pedido");
             }
             
+        }
+
+        public async Task<List<Order>> GetAll()
+        {
+            List<Order> orders = await _orderRepository.GetAll();
+
+            return orders;
+        }
+
+        public async Task<Order> GetById(string id)
+        {
+            Order order = await _orderRepository.GetById(id);
+            return order;
         }
     }
 }

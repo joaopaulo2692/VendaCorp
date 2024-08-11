@@ -58,5 +58,19 @@ namespace VendaCorp.Infrastructure.Repository
 
             return Result.Ok();
         }
+
+        public async Task<List<Order>> GetAll()
+        {
+            List<Order> orders = await _db.Orders.ToListAsync();
+
+            return orders;
+        }
+
+        public async Task<Order> GetById(string id)
+        {
+            Order order = await _db.Orders.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            return order;
+        }
     }
 }

@@ -13,5 +13,7 @@ namespace VendaCorp.Core.Interfaces.Repositories
         public Task<Result> CreateAsync(Order order);
         public Task<Result> ApproveAsync(Order order);
         public Task<Result> CancellAsync(Order order);
+        public Task<Order> GetById(string id);
+        public Task<List<Order>> GetAll();
     }
 }
