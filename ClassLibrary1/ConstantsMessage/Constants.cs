@@ -15,4 +15,18 @@ namespace VendaCorp.Core.ConstantsMessage
         public static string Disable = "Inativo";
         public static string Waiting = "Aguardando Ativação";
     }
+
+    public static class ContantsOrder
+    {
+        public static string Created = "Criado";
+        public static string Approved = "Aprovado";
+        public static string Cancelled = "Cancelado";
+    }
+
+    public static class ContantsSalesOrder
+    {
+        public static string Peding = "Pendente";
+        public static string OnTheWay = "Em caminho";
+        public static string Delivered = "Entregue";
+    }
 }

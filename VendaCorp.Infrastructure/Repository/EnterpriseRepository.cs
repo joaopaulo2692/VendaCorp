@@ -31,7 +31,7 @@ namespace VendaCorp.Infrastructure.Repository
             enterprise.DisabledAt = null;
             enterpriseDb.Activate = true;
             enterpriseDb.Status = ConstantsEnterprise.Activate;
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
 
             return Result.Ok();
         }
