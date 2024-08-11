@@ -10,7 +10,7 @@ namespace VendaCorp.Core.Entities
     public class Order : BaseEntities
     {
         public int Id { get; set; }
-        public string SalesOrderId { get; set; }
+        public string DeliveryOrderId { get; set; }
         //public string OrderCode { get; set; }
         public string OrderDate { get; set; }
         public string OrderItems { get; set; }
@@ -22,7 +22,7 @@ namespace VendaCorp.Core.Entities
 
         public string EnterpriseId { get; set; }
 
-        public virtual DeliveryOrder SalesOrder { get; set; }
+        public virtual DeliveryOrder DeliveryOrder { get; set; }
         public virtual Enterprise Enterprise { get; set; }
     }
 }

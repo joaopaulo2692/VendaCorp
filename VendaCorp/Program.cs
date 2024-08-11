@@ -32,6 +32,7 @@ builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();
 builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 builder.Services.AddScoped<IEnterpriseRepository, EnterpriseRepository>();
 builder.Services.AddScoped<IEnterpriseService, EnterpriseService>();
+builder.Services.AddScoped<IDeliveryOrderRepository, DeliveryOrderRepository>();
 
 
 var app = builder.Build();

@@ -9,7 +9,7 @@ using VendaCorp.Core.Interfaces.Repositories;
 
 namespace VendaCorp.Infrastructure.Repository
 {
-    public class SalesOrderRepository : ISalesOrderRepository
+    public class DeliveryOrderRepository : IDeliveryOrderRepository
     {
         public Task<Result> ApproveAsync(DeliveryOrder salesOrder)
         {

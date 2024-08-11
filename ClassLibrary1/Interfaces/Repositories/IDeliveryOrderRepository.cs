@@ -8,7 +8,7 @@ using VendaCorp.Core.Entities;
 
 namespace VendaCorp.Core.Interfaces.Repositories
 {
-    public interface ISalesOrderRepository
+    public interface IDeliveryOrderRepository
     {
         public Task<List<DeliveryOrder>> GetAllAsync();
         public Task<Result> CreateAsync(DeliveryOrder salesOrder);

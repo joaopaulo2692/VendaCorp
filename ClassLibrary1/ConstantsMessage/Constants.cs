@@ -23,7 +23,7 @@ namespace VendaCorp.Core.ConstantsMessage
         public static string Cancelled = "Cancelado";
     }
 
-    public static class ContantsSalesOrder
+    public static class ContantsDeliveryOrder
     {
         public static string Peding = "Pendente";
         public static string OnTheWay = "Em caminho";
