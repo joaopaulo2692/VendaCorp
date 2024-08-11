@@ -68,5 +68,19 @@ namespace VendaCorp.Infrastructure.Repository
 
             return enterpriseDb;
         }
+
+        public async Task<Enterprise> GetByLegalName(string legalName)
+        {
+            Enterprise enterpriseDb = await _db.Enterprises.Where(x => x.LegalName == legalName).FirstOrDefaultAsync();
+
+            return enterpriseDb;
+        }
+
+        public async Task<Enterprise> GetByTradeName(string tradeName)
+        {
+            Enterprise enterpriseDb = await _db.Enterprises.Where(x => x.TradeName == tradeName).FirstOrDefaultAsync();
+
+            return enterpriseDb;
+        }
     }
 }

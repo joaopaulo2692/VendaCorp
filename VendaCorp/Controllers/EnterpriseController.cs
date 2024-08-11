@@ -23,11 +23,11 @@ namespace VendaCorp.API.Controllers
         {
             try
             {
-                Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
-                if (idUser == null)
-                {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
-                }
+                //Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                //if (idUser == null)
+                //{
+                //    return StatusCode(StatusCodes.Status401Unauthorized);
+                //}
 
                 Result response = await _enterpriseService.CreateAsync(model);
                 if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest);
@@ -79,6 +79,77 @@ namespace VendaCorp.API.Controllers
                 if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest);
 
                 return StatusCode(StatusCodes.Status201Created);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<IActionResult> GetByIdAsync(int id)
+        {
+            try
+            {
+                Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (idUser == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized);
+                }
+
+                EnterpriseVO response = await _enterpriseService.GetById(id);
+                if (response == null) return StatusCode(StatusCodes.Status404NotFound);
+
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+
+        [HttpGet]
+        [Route("GetByLegalName")]
+        public async Task<IActionResult> GetByLegalNameAsync(string legalName)
+        {
+            try
+            {
+                Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (idUser == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized);
+                }
+
+                EnterpriseVO response = await _enterpriseService.GetByLegalName(legalName);
+                if (response == null) return StatusCode(StatusCodes.Status404NotFound);
+
+                return StatusCode(StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("GetByTradeName")]
+        public async Task<IActionResult> GetByTradeNameAsync(string tradeName)
+        {
+            try
+            {
+                Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (idUser == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized);
+                }
+
+                EnterpriseVO response = await _enterpriseService.GetByTradeName(tradeName);
+                if (response == null) return StatusCode(StatusCodes.Status404NotFound);
+
+                return StatusCode(StatusCodes.Status200OK);
             }
             catch (Exception ex)
             {

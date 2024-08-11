@@ -17,6 +17,7 @@ namespace VendaCorp.Core.Entities
         public string Phone { get; set; }
         public string Status { get; set; }
         public bool Activate { get; set; } = false;
+        public string Document { get; set; }
 
         public List<Order> Orders { get; set; }
     }

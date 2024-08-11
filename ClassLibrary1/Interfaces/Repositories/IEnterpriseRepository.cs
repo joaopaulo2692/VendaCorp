@@ -14,5 +14,8 @@ namespace VendaCorp.Core.Interfaces.Repositories
         public Task<Result> ActivateAsync(Enterprise enterprise);
         public Task<Result> DisableAsync(Enterprise enterprise);
         public Task<Enterprise> GetById(int id);
+
+        public Task<Enterprise> GetByTradeName(string tradeName);
+        public Task<Enterprise> GetByLegalName(string LegalName);
      }
 }

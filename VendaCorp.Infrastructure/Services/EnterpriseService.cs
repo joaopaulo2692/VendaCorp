@@ -48,5 +48,35 @@ namespace VendaCorp.Infrastructure.Services
             Result response = await _enterpriseRepo.DisableAsync(enterprise);
             return response;
         }
+
+        public async Task<EnterpriseVO> GetById(int id)
+        {
+            Enterprise enterprise = await _enterpriseRepo.GetById(id);
+            if (enterprise == null) return new EnterpriseVO();
+
+            EnterpriseVO enterpriseVO = _mapper.Map<EnterpriseVO>(enterprise);
+
+            return enterpriseVO;
+        }
+
+        public async Task<EnterpriseVO> GetByLegalName(string legalName)
+        {
+            Enterprise enterprise = await _enterpriseRepo.GetByLegalName(legalName);
+            if (enterprise == null) return new EnterpriseVO();
+
+            EnterpriseVO enterpriseVO = _mapper.Map<EnterpriseVO>(enterprise);
+
+            return enterpriseVO;
+        }
+
+        public async Task<EnterpriseVO> GetByTradeName(string tradeName)
+        {
+            Enterprise enterprise = await _enterpriseRepo.GetByLegalName(tradeName);
+            if (enterprise == null) return new EnterpriseVO();
+
+            EnterpriseVO enterpriseVO = _mapper.Map<EnterpriseVO>(enterprise);
+
+            return enterpriseVO;
+        }
     }
 }

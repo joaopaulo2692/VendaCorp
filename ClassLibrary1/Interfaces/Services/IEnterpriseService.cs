@@ -14,5 +14,10 @@ namespace VendaCorp.Core.Interfaces.Services
         public Task<Result> CreateAsync(EnterpriseVO enterprise);
         public Task<Result> ActivateAsync(int id);
         public Task<Result> DisableAsync(int id);
+
+        public Task<EnterpriseVO> GetById(int id);
+
+        public Task<EnterpriseVO> GetByTradeName(string tradeName);
+        public Task<EnterpriseVO> GetByLegalName(string LegalName);
     }
 }
