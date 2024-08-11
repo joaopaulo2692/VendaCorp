@@ -7,6 +7,7 @@ using VendaCorp.Core.Interfaces.Services;
 using VendaCorp.Infrastructure.Data;
 using VendaCorp.Infrastructure.Repository;
 using VendaCorp.Infrastructure.Serivces;
+using VendaCorp.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductExternApiService, ProductExternApiService>();
 builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();
 builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
+builder.Services.AddScoped<IEnterpriseRepository, EnterpriseRepository>();
+builder.Services.AddScoped<IEnterpriseService, EnterpriseService>();
 
 
 var app = builder.Build();

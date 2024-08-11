@@ -11,7 +11,6 @@ namespace VendaCorp.Core.Entities
     public class ApplicationUser : IdentityUser
     {
         public string Id { get; set; }
-        public string Name { get; set; }
 
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }

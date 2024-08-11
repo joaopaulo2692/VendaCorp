@@ -29,14 +29,14 @@ namespace VendaCorp.Infrastructure.Data
 
             modelBuilder.Entity<Enterprise>()
             .HasMany(x => x.Orders)
-            .WithOne(x => x.Enterprise)
-            .OnDelete(DeleteBehavior.Cascade);
+            .WithOne(x => x.Enterprise);
+
 
             modelBuilder.Entity<Order>()
             .HasOne(x => x.SalesOrder)
             .WithOne(x => x.Order)
-            .HasForeignKey<SalesOrder>(x => x.OrderId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey<SalesOrder>(x => x.OrderId);
+
 
         }
 

@@ -28,7 +28,7 @@ namespace VendaCorp.Infrastructure.Repository
             try
             {
                 user.Id = Guid.NewGuid().ToString();
-                user.Name = user.Name;
+                user.UserName = user.UserName;
                 user.Email = user.Email;
                 user.EmailConfirmed= true;
                 user.CreatedAt = DateTime.Now;

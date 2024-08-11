@@ -88,7 +88,7 @@ namespace VendaCorp.API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginVO loginVO)
         {
