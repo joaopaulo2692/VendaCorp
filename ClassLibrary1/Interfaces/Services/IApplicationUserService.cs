@@ -10,7 +10,7 @@ namespace VendaCorp.Core.Interfaces.Services
 {
     public interface IApplicationUserService
     {
-        public Task<Result> CreateAsync(UserVO user);
+        public Task<Result> CreateAsync(UserCreateVO user);
         public Task<Result> DeleteAsync(string idUser);
         public Task<UserVO> GetByIdAsync(string idUser);
         public Task<List<UserVO>> GetAllAsync();

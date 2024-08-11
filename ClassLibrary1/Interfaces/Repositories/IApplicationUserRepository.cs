@@ -12,9 +12,10 @@ namespace VendaCorp.Core.Interfaces.Repositories
     public interface IApplicationUserRepository
     {
         
-        public Task<Result> CreateUser(ApplicationUser user);
-        public Task<Result> RemoveUser(ApplicationUser user);
-        public Task<List<ApplicationUser>> GetAllUsers();
-        public Task<ApplicationUser> GetById(string id);
+        public Task<Result> CreateUserAsync(ApplicationUser user);
+        public Task<Result> RemoveAsync(ApplicationUser user);
+        public Task<List<ApplicationUser>> GetAllAsync();
+        public Task<ApplicationUser> GetByEmailAsync(string id);
+        public Task<ApplicationUser> GetByIdAsync(string id);
     }
 }

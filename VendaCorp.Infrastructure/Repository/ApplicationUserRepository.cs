@@ -23,7 +23,7 @@ namespace VendaCorp.Infrastructure.Repository
             _db = db;
         }
 
-        public async Task<Result> CreateUser(ApplicationUser user)
+        public async Task<Result> CreateUserAsync(ApplicationUser user)
         {
             try
             {
@@ -50,20 +50,26 @@ namespace VendaCorp.Infrastructure.Repository
             }
         }
 
-        public async Task<List<ApplicationUser>> GetAllUsers()
+        public async Task<List<ApplicationUser>> GetAllAsync()
         {
             List<ApplicationUser> users = await _db.Users.ToListAsync();
 
             return users;
         }
 
-        public async Task<ApplicationUser> GetById(string id)
+        public async Task<ApplicationUser> GetByEmailAsync(string email)
+        {
+            ApplicationUser user = await _db.Users.Where(x => x.Email== email && x.DisabledAt == null).FirstOrDefaultAsync();
+            return user;
+        }
+
+        public async Task<ApplicationUser> GetByIdAsync(string id)
         {
             ApplicationUser user = await _db.Users.Where(x => x.Id == id && x.DisabledAt == null).FirstOrDefaultAsync();
             return user;
         }
 
-        public async Task<Result> RemoveUser(ApplicationUser user)
+        public async Task<Result> RemoveAsync(ApplicationUser user)
         {
             ApplicationUser userDb = await _db.Users.Where(x => x.Id == user.Id && x.DisabledAt == null).FirstOrDefaultAsync();
 
