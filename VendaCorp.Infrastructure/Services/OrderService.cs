@@ -78,14 +78,17 @@ namespace VendaCorp.Infrastructure.Services
 
                 Order order = new Order()
                 {
-                    CustomerDocument = orderCreateVO.CustomerDocument,
+                    CustomerDocument = enterprise.Document,
                     Enterprise = enterprise,
                     Products = products,
-                    TotalAmount = totalAmount
-
+                    TotalAmount = totalAmount,
+                    CustomerName = enterprise.TradeName,
+                    OrderDate = DateTime.Now
                 };
 
-                return Result.Ok();
+                Result response = await _orderRepository.CreateAsync(order);
+
+                return response;
             }
             catch(Exception ex)
             {

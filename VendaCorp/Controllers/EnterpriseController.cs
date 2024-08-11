@@ -8,6 +8,8 @@ using VendaCorp.Core.Interfaces.Services;
 
 namespace VendaCorp.API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class EnterpriseController : ControllerBase
     {
         private readonly IEnterpriseService _enterpriseService;
