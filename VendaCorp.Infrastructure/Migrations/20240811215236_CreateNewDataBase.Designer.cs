@@ -12,8 +12,8 @@ using VendaCorp.Infrastructure.Data;
 namespace VendaCorp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240811203346_altUser")]
-    partial class altUser
+    [Migration("20240811215236_CreateNewDataBase")]
+    partial class CreateNewDataBase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,6 +235,49 @@ namespace VendaCorp.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("VendaCorp.Core.Entities.DeliveryOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CustomerAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ShippingCompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShippningCompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShippningCompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId")
+                        .IsUnique();
+
+                    b.HasIndex("ShippingCompanyId");
+
+                    b.ToTable("DeliveryOrder");
+                });
+
             modelBuilder.Entity("VendaCorp.Core.Entities.Enterprise", b =>
                 {
                     b.Property<int>("Id")
@@ -293,11 +336,8 @@ namespace VendaCorp.Infrastructure.Migrations
 
             modelBuilder.Entity("VendaCorp.Core.Entities.Order", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2")
@@ -311,6 +351,9 @@ namespace VendaCorp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DeliveryOrderId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("DisabledAt")
                         .HasColumnType("datetime2")
                         .HasColumnName("disabled_at");
@@ -322,19 +365,14 @@ namespace VendaCorp.Infrastructure.Migrations
                     b.Property<int>("EnterpriseId1")
                         .HasColumnType("int");
 
-                    b.Property<string>("OrderDate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("OrderItems")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Products")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SalesOrderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -355,48 +393,6 @@ namespace VendaCorp.Infrastructure.Migrations
                     b.HasIndex("EnterpriseId1");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("VendaCorp.Core.Entities.SalesOrder", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("CarrierName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CustomerAddress")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DeliveryDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsAproved")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShippingCompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ShippningCompanyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId")
-                        .IsUnique();
-
-                    b.HasIndex("ShippingCompanyId");
-
-                    b.ToTable("SalesOrders");
                 });
 
             modelBuilder.Entity("VendaCorp.Core.Entities.ShippingCompany", b =>
@@ -467,6 +463,25 @@ namespace VendaCorp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("VendaCorp.Core.Entities.DeliveryOrder", b =>
+                {
+                    b.HasOne("VendaCorp.Core.Entities.Order", "Order")
+                        .WithOne("DeliveryOrder")
+                        .HasForeignKey("VendaCorp.Core.Entities.DeliveryOrder", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("VendaCorp.Core.Entities.ShippingCompany", "ShippingCompany")
+                        .WithMany("DeliveryOrder")
+                        .HasForeignKey("ShippingCompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("ShippingCompany");
+                });
+
             modelBuilder.Entity("VendaCorp.Core.Entities.Order", b =>
                 {
                     b.HasOne("VendaCorp.Core.Entities.Enterprise", "Enterprise")
@@ -478,25 +493,6 @@ namespace VendaCorp.Infrastructure.Migrations
                     b.Navigation("Enterprise");
                 });
 
-            modelBuilder.Entity("VendaCorp.Core.Entities.SalesOrder", b =>
-                {
-                    b.HasOne("VendaCorp.Core.Entities.Order", "Order")
-                        .WithOne("SalesOrder")
-                        .HasForeignKey("VendaCorp.Core.Entities.SalesOrder", "OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("VendaCorp.Core.Entities.ShippingCompany", "ShippingCompany")
-                        .WithMany("SalesOrders")
-                        .HasForeignKey("ShippingCompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("ShippingCompany");
-                });
-
             modelBuilder.Entity("VendaCorp.Core.Entities.Enterprise", b =>
                 {
                     b.Navigation("Orders");
@@ -504,13 +500,13 @@ namespace VendaCorp.Infrastructure.Migrations
 
             modelBuilder.Entity("VendaCorp.Core.Entities.Order", b =>
                 {
-                    b.Navigation("SalesOrder")
+                    b.Navigation("DeliveryOrder")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("VendaCorp.Core.Entities.ShippingCompany", b =>
                 {
-                    b.Navigation("SalesOrders");
+                    b.Navigation("DeliveryOrder");
                 });
 #pragma warning restore 612, 618
         }

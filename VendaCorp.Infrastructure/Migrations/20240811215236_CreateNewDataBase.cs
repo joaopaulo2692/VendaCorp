@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VendaCorp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class createDb : Migration
+    public partial class CreateNewDataBase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,7 +30,6 @@ namespace VendaCorp.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updated_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     disabled_at = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -200,10 +199,9 @@ namespace VendaCorp.Infrastructure.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SalesOrderId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    OrderDate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DeliveryOrderId = table.Column<int>(type: "int", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     OrderItems = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Products = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalAmount = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -228,30 +226,30 @@ namespace VendaCorp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SalesOrders",
+                name: "DeliveryOrder",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CarrierName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShippningCompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsAproved = table.Column<bool>(type: "bit", nullable: false),
                     ShippningCompanyId = table.Column<int>(type: "int", nullable: false),
                     ShippingCompanyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SalesOrders", x => x.Id);
+                    table.PrimaryKey("PK_DeliveryOrder", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SalesOrders_Orders_OrderId",
+                        name: "FK_DeliveryOrder_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SalesOrders_ShippingCompanies_ShippingCompanyId",
+                        name: "FK_DeliveryOrder_ShippingCompanies_ShippingCompanyId",
                         column: x => x.ShippingCompanyId,
                         principalTable: "ShippingCompanies",
                         principalColumn: "Id",
@@ -298,20 +296,20 @@ namespace VendaCorp.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_EnterpriseId1",
-                table: "Orders",
-                column: "EnterpriseId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SalesOrders_OrderId",
-                table: "SalesOrders",
+                name: "IX_DeliveryOrder_OrderId",
+                table: "DeliveryOrder",
                 column: "OrderId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesOrders_ShippingCompanyId",
-                table: "SalesOrders",
+                name: "IX_DeliveryOrder_ShippingCompanyId",
+                table: "DeliveryOrder",
                 column: "ShippingCompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_EnterpriseId1",
+                table: "Orders",
+                column: "EnterpriseId1");
         }
 
         /// <inheritdoc />
@@ -333,7 +331,7 @@ namespace VendaCorp.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "SalesOrders");
+                name: "DeliveryOrder");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
