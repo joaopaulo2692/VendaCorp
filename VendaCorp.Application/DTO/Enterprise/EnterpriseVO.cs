@@ -16,6 +16,6 @@ namespace VendaCorp.Application.DTO.Enterprise
         public string Website { get; set; }
         public string Phone { get; set; }
         public string Status { get; set; }
-        public bool Activate { get; set; } = false;
+        public bool Activate { get; set; }
     }
 }

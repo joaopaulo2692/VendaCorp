@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VendaCorp.Application.DTO.Enterprise;
 using VendaCorp.Core.ConstantsMessage;
 using VendaCorp.Core.Entities;
 using VendaCorp.Core.Interfaces.Repositories;
@@ -27,6 +28,7 @@ namespace VendaCorp.Infrastructure.Repository
             if (enterpriseDb == null) return Result.Fail("Empresa não localizada");
 
             enterprise.UpdatedAt = DateTime.Now;
+            enterprise.DisabledAt = null;
             enterpriseDb.Activate = true;
             enterpriseDb.Status = ConstantsEnterprise.Activate;
             _db.SaveChangesAsync();
@@ -58,6 +60,13 @@ namespace VendaCorp.Infrastructure.Repository
             _db.SaveChangesAsync();
 
             return Result.Ok();
+        }
+
+        public async Task<Enterprise> GetById(int id)
+        {
+            Enterprise enterpriseDb = await _db.Enterprises.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            return enterpriseDb;
         }
     }
 }
