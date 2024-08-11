@@ -53,7 +53,7 @@ namespace VendaCorp.API.Controllers
         }
 
         [HttpGet]
-        [Route("Delete")]
+        [Route("GetAll")]
         public async Task<IActionResult> GetAll()
         {
 
@@ -71,7 +71,7 @@ namespace VendaCorp.API.Controllers
         }
 
         [HttpGet]
-        [Route("Delete")]
+        [Route("GetById")]
         public async Task<IActionResult> GetById(string idUser)
         {
 
