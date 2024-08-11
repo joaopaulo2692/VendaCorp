@@ -14,6 +14,6 @@ namespace VendaCorp.Core.Interfaces.Services
         public Task<Result> DeleteAsync(string idUser);
         public Task<UserVO> GetByIdAsync(string idUser);
         public Task<List<UserVO>> GetAllAsync();
-        public async Task<Result> Login(LoginVO user);
+        public Task<Result> Login(LoginVO user);
     }
 }

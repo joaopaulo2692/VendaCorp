@@ -35,6 +35,7 @@ namespace VendaCorp.Infrastructure.Data
             modelBuilder.Entity<Order>()
             .HasOne(x => x.SalesOrder)
             .WithOne(x => x.Order)
+            .HasForeignKey<SalesOrder>(x => x.OrderId)
             .OnDelete(DeleteBehavior.Cascade);
 
         }

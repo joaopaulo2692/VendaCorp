@@ -68,6 +68,7 @@ namespace VendaCorp.Infrastructure.Serivces
                 {
                     return Result.Fail("Erro ao fazer Login");
                 }
+                
                 Result response = await _applicationRepo.SignInUser(client, user.Password);
 
                 return response;

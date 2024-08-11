@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace VendaCorp.Core.Entities
     public class Order : BaseEntities
     {
         public int Id { get; set; }
-        public int SalesOrderId { get; set; }
-        public string OrderCode { get; set; }
+        public string SalesOrderId { get; set; }
+        //public string OrderCode { get; set; }
         public string OrderDate { get; set; }
         public string OrderItems { get; set; }
         public string Products { get; set; }

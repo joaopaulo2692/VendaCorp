@@ -9,7 +9,7 @@ namespace VendaCorp.Core.Entities
     public class SalesOrder
     {
         public string Id { get; set; }
-        public string OrderId { get; set; }
+        public int OrderId { get; set; }
         public DateTime DeliveryDate { get; set; }
         public string CarrierName { get; set; }
         public string CustomerAddress { get; set; }       
