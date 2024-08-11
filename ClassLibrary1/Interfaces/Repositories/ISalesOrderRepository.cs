@@ -10,9 +10,9 @@ namespace VendaCorp.Core.Interfaces.Repositories
 {
     public interface ISalesOrderRepository
     {
-        public Task<List<SalesOrder>> GetAllAsync();
-        public Task<Result> CreateAsync(SalesOrder salesOrder);
-        public Task<Result> CancelAsync(SalesOrder salesOrder);
-        public Task<Result> ApproveAsync(SalesOrder salesOrder);
+        public Task<List<DeliveryOrder>> GetAllAsync();
+        public Task<Result> CreateAsync(DeliveryOrder salesOrder);
+        public Task<Result> CancelAsync(DeliveryOrder salesOrder);
+        public Task<Result> ApproveAsync(DeliveryOrder salesOrder);
     }
 }

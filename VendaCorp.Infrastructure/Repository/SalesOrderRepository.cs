@@ -11,22 +11,22 @@ namespace VendaCorp.Infrastructure.Repository
 {
     public class SalesOrderRepository : ISalesOrderRepository
     {
-        public Task<Result> ApproveAsync(SalesOrder salesOrder)
+        public Task<Result> ApproveAsync(DeliveryOrder salesOrder)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Result> CancelAsync(SalesOrder salesOrder)
+        public Task<Result> CancelAsync(DeliveryOrder salesOrder)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Result> CreateAsync(SalesOrder salesOrder)
+        public Task<Result> CreateAsync(DeliveryOrder salesOrder)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<SalesOrder>> GetAllAsync()
+        public Task<List<DeliveryOrder>> GetAllAsync()
         {
             throw new NotImplementedException();
         }

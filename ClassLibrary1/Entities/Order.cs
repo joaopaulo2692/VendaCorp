@@ -22,7 +22,7 @@ namespace VendaCorp.Core.Entities
 
         public string EnterpriseId { get; set; }
 
-        public virtual SalesOrder SalesOrder { get; set; }
+        public virtual DeliveryOrder SalesOrder { get; set; }
         public virtual Enterprise Enterprise { get; set; }
     }
 }

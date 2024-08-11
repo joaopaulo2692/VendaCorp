@@ -14,7 +14,7 @@ namespace VendaCorp.Infrastructure.Data
     public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
     {
         public DbSet<ShippingCompany> ShippingCompanies{ get; set; }
-        public DbSet<SalesOrder> SalesOrders{ get; set; }
+        public DbSet<DeliveryOrder> SalesOrders{ get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Enterprise> Enterprises { get; set; }
 
@@ -23,9 +23,9 @@ namespace VendaCorp.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
-            modelBuilder.Entity<SalesOrder>()
+            modelBuilder.Entity<DeliveryOrder>()
             .HasOne(x => x.ShippingCompany)
-            .WithMany(x => x.SalesOrders);
+            .WithMany(x => x.DeliveryOrder);
 
             modelBuilder.Entity<Enterprise>()
             .HasMany(x => x.Orders)
@@ -35,7 +35,7 @@ namespace VendaCorp.Infrastructure.Data
             modelBuilder.Entity<Order>()
             .HasOne(x => x.SalesOrder)
             .WithOne(x => x.Order)
-            .HasForeignKey<SalesOrder>(x => x.OrderId);
+            .HasForeignKey<DeliveryOrder>(x => x.OrderId);
 
 
         }

@@ -11,6 +11,6 @@ namespace VendaCorp.Core.Entities
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public List<SalesOrder> SalesOrders { get; set; }
+        public List<DeliveryOrder> DeliveryOrder { get; set; }
     }
 }
