@@ -9,8 +9,8 @@ namespace VendaCorp.Core.Entities
 {
     public class Order : BaseEntities
     {
-        public int Id { get; set; }
-        public string DeliveryOrderId { get; set; }
+        public string Id { get; set; }
+        public int DeliveryOrderId { get; set; }
         //public string OrderCode { get; set; }
         public DateTime OrderDate { get; set; }
         public string OrderItems { get; set; }
@@ -24,5 +24,14 @@ namespace VendaCorp.Core.Entities
 
         public virtual DeliveryOrder DeliveryOrder { get; set; }
         public virtual Enterprise Enterprise { get; set; }
+        public Order()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(100000000, 1000000000);
+            Id = "RO" + randomNumber.ToString();
+        }
+
+
     }
+  
 }
