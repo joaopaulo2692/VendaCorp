@@ -13,10 +13,10 @@ namespace VendaCorp.Core.Entities
         public int Id { get; set; }
         public string OrderId { get; set; }
         public DateTime DeliveryDate { get; set; }
-        public string ShippningCompanyName { get; set; }
+        public string ShippingCompanyName { get; set; }
         public string CustomerAddress { get; set; }       
         public string Status { get; set; }
-        public int ShippningCompanyId { get; set; }
+        public int ShippingCompanyId { get; set; }
      
 
         public virtual Order Order { get; set; }

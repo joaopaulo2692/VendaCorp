@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VendaCorp.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using VendaCorp.Infrastructure.Data;
 namespace VendaCorp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240811235947_Alteration")]
+    partial class Alteration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -356,7 +359,11 @@ namespace VendaCorp.Infrastructure.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("disabled_at");
 
-                    b.Property<int>("EnterpriseId")
+                    b.Property<string>("EnterpriseId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EnterpriseId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderDate")
@@ -383,7 +390,7 @@ namespace VendaCorp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EnterpriseId");
+                    b.HasIndex("EnterpriseId1");
 
                     b.ToTable("Orders");
                 });
@@ -479,7 +486,7 @@ namespace VendaCorp.Infrastructure.Migrations
                 {
                     b.HasOne("VendaCorp.Core.Entities.Enterprise", "Enterprise")
                         .WithMany("Orders")
-                        .HasForeignKey("EnterpriseId")
+                        .HasForeignKey("EnterpriseId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -20,7 +20,7 @@ namespace VendaCorp.Core.Entities
         public string CustomerDocument { get; set; }
         public string Status { get; set; }
 
-        public string EnterpriseId { get; set; }
+        public int EnterpriseId { get; set; }
 
         public virtual DeliveryOrder DeliveryOrder { get; set; }
         public virtual Enterprise Enterprise { get; set; }
