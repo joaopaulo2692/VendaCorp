@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VendaCorp.Application.DTO;
 using VendaCorp.Application.DTO.Order;
+using VendaCorp.Core.ConstantsMessage;
 using VendaCorp.Core.Entities;
 using VendaCorp.Core.Interfaces.Repositories;
 using VendaCorp.Core.Interfaces.Services;
@@ -63,15 +64,13 @@ namespace VendaCorp.Infrastructure.Services
 
                 if (enterprise == null) return Result.Fail("Empresa não localizada");
 
-                List<ProductVO> productsExternalVO = await _productExtern.GetAll();
-                List<string> productsExtenalString = productsExternalVO.Select(x => x.Title).ToList();
-                double totalAmount = 0;
+                if (enterprise.Status == ConstantsEnterprise.Waiting) return Result.Fail("Empresa ainda não foi ativada");
+                if (enterprise.Status == ConstantsEnterprise.Disable) return Result.Fail("Empresa está desativada");
 
-                foreach(string productValue in productsExtenalString)
-                {
-                    ProductVO productVOaux = productsExternalVO.Where(x => x.Title == productValue).FirstOrDefault();
-                    totalAmount += productVOaux.Price;
-                }
+                List<ProductVO> productsExternalVO = await _productExtern.GetAll();
+                List<string> productsExtenalString = productsExternalVO.Select(x => x.Title.Trim()).ToList();
+                
+                double totalAmount = 0;
 
                 foreach (string product in orderCreateVO.Products)
                 {
@@ -80,6 +79,19 @@ namespace VendaCorp.Infrastructure.Services
                         return Result.Fail("Produto passado não está cadastrado no sistema");
                     }
                 }
+                foreach (string productSelect in orderCreateVO.Products)
+                {
+                    ProductVO productVOaux = productsExternalVO.Where(x => x.Title.Trim() == productSelect.Trim()).FirstOrDefault();
+                    totalAmount += productVOaux.Price;
+                }
+
+                //foreach(string productValue in productsExtenalString)
+                //{
+                //    ProductVO productVOaux = productsExternalVO.Where(x => x.Title == productValue).FirstOrDefault();
+                //    totalAmount += productVOaux.Price;
+                //}
+
+               
 
 
                 string products = String.Join(", ", orderCreateVO.Products);

@@ -48,15 +48,22 @@ namespace VendaCorp.Infrastructure.Repository
 
         public async Task<Result> CreateAsync(Order order)
         {
-            order.CreatedAt = DateTime.Now;
-            order.UpdatedAt = DateTime.Now;
-            order.Enterprise = order.Enterprise;
-            order.Status = ContantsOrder.Created;
+            try
+            {
+                order.CreatedAt = DateTime.Now;
+                order.UpdatedAt = DateTime.Now;
+                order.Enterprise = order.Enterprise;
+                order.Status = ContantsOrder.Created;
 
-            _db.Orders.Add(order);
-            await _db.SaveChangesAsync();
+                _db.Orders.Add(order);
+                await _db.SaveChangesAsync();
 
-            return Result.Ok();
+                return Result.Ok();
+            }
+            catch(Exception ex)
+            {
+                return Result.Fail(ex.Message);
+            }
         }
 
         public async Task<List<Order>> GetAll()

@@ -24,7 +24,7 @@ namespace VendaCorp.API.Controllers
                 List<ProductVO> products = await _productExtern.GetAll();
                 if (products == null) return StatusCode(StatusCodes.Status404NotFound);
 
-                return StatusCode(StatusCodes.Status200OK);
+                return StatusCode(StatusCodes.Status200OK, products);
             }
             catch (Exception ex)
             {

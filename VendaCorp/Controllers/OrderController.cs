@@ -35,7 +35,7 @@ namespace VendaCorp.API.Controllers
                 //}
 
                 Result response = await _orderService.CreateAsync(model);
-                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest);
+                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest, response);
 
                 return StatusCode(StatusCodes.Status201Created);
             }
