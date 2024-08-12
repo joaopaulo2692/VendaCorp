@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using VendaCorp.Application.DTO;
 using VendaCorp.Application.DTO.Enterprise;
+using VendaCorp.Core.ConstantsMessage;
 using VendaCorp.Core.Interfaces.Repositories;
 using VendaCorp.Core.Interfaces.Services;
 
@@ -51,7 +52,7 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 Result response = await _enterpriseService.ActivateAsync(id);
@@ -74,7 +75,7 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 Result response = await _enterpriseService.DisableAsync(id);
@@ -98,7 +99,7 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 EnterpriseVO response = await _enterpriseService.GetById(id);
@@ -122,7 +123,7 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 EnterpriseVO response = await _enterpriseService.GetByLegalName(legalName);
@@ -145,7 +146,7 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 EnterpriseVO response = await _enterpriseService.GetByTradeName(tradeName);

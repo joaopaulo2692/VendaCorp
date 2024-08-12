@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using VendaCorp.Application.DTO.Enterprise;
 using VendaCorp.Application.DTO.Order;
+using VendaCorp.Core.ConstantsMessage;
 using VendaCorp.Core.Entities;
 using VendaCorp.Core.Interfaces.Services;
 using VendaCorp.Infrastructure.Services;
@@ -53,7 +54,7 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 Result response = await _orderService.ApproveAsync(orderId);
@@ -76,7 +77,7 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 Result response = await _orderService.CancellAsync(orderId);
@@ -99,7 +100,7 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 Order response = await _orderService.GetById(orderId);

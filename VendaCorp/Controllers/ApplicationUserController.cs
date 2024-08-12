@@ -1,6 +1,8 @@
 ﻿using FluentResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using VendaCorp.Application.DTO.ApplicationUser;
+using VendaCorp.Core.ConstantsMessage;
 using VendaCorp.Core.Interfaces.Services;
 
 namespace VendaCorp.API.Controllers
@@ -41,6 +43,11 @@ namespace VendaCorp.API.Controllers
 
             try
             {
+                Claim isLogged = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (isLogged == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
+                }
                 Result response = await _userService.DeleteAsync(idUser);
 
                 return StatusCode(StatusCodes.Status200OK, response);
@@ -59,6 +66,11 @@ namespace VendaCorp.API.Controllers
 
             try
             {
+                Claim isLogged = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (isLogged == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
+                }
                 List<UserVO> response = await _userService.GetAllAsync();
 
                 return StatusCode(StatusCodes.Status200OK, response);
@@ -77,6 +89,11 @@ namespace VendaCorp.API.Controllers
 
             try
             {
+                Claim isLogged = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (isLogged == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
+                }
                 UserVO response = await _userService.GetByIdAsync(idUser);
 
                 return StatusCode(StatusCodes.Status200OK, response);

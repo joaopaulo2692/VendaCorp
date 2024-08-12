@@ -29,4 +29,9 @@ namespace VendaCorp.Core.ConstantsMessage
         public static string OnTheWay = "Em caminho";
         public static string Delivered = "Entregue";
     }
+
+    public static class ConstantsAuthorized
+    {
+        public static string Error = "Deve ser feito login para receber autorização para essa requisição";
+    }
 }
