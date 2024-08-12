@@ -12,7 +12,7 @@ namespace VendaCorp.Core.Interfaces.Repositories
     {
         public Task<List<DeliveryOrder>> GetAllAsync();
         public Task<Result> CreateAsync(DeliveryOrder salesOrder);
-        public Task<Result> CancelAsync(DeliveryOrder salesOrder);
-        public Task<Result> ApproveAsync(DeliveryOrder salesOrder);
+        public Task<Result> DeliveredAsync(DeliveryOrder salesOrder);
+        public Task<Result> OnTheWayAsync(DeliveryOrder salesOrder);
     }
 }
