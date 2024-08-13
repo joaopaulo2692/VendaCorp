@@ -75,7 +75,9 @@ namespace VendaCorp.Infrastructure.Repository
 
         public async Task<Order> GetById(string id)
         {
-            Order order = await _db.Orders.Where(x => x.Id == id).FirstOrDefaultAsync();
+            Order order = await _db.Orders.Where(x => x.Id == id)
+                                .Include(x => x.OrderItems)
+                                .FirstOrDefaultAsync();
 
             return order;
         }

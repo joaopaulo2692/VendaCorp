@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VendaCorp.Application.DTO.DeliveryOrder;
+using VendaCorp.Core.ConstantsMessage;
 using VendaCorp.Core.Entities;
 using VendaCorp.Core.Interfaces.Repositories;
 using VendaCorp.Core.Interfaces.Services;
@@ -29,6 +30,10 @@ namespace VendaCorp.Infrastructure.Services
             Order order = await _orderRepo.GetById(delivery.OrderId);
             if (order == null) return Result.Fail("Pedido não encontrado");
 
+            if(order.OrderItems == null || order.OrderItems.Count == 0) return Result.Fail("Pedido sem itens");
+
+            if (order.Status == ContantsOrder.Cancelled || order.Status == ContantsOrder.Created) return Result.Fail("Pedido ainda não foi aprovado ou está cancelado");
+
             ShippingCompany shippingCompany = await _shippingRepo.GetByName(delivery.ShippingCompanyName);
             if (shippingCompany == null) return Result.Fail("Transportadora informada não cadastrada no sistema");
 
@@ -38,7 +43,8 @@ namespace VendaCorp.Infrastructure.Services
                 DeliveryDate = delivery.DeliveryDate,
                 Order = order,
                 ShippingCompany = shippingCompany,
-
+                Status = ContantsDeliveryOrder.Peding,
+                ShippingCompanyName = delivery.ShippingCompanyName,
             };
 
             Result response = await _deliveryRepo.CreateAsync(deliveryOrder);

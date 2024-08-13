@@ -14,6 +14,11 @@ namespace VendaCorp.Infrastructure.Repository
     {
         private readonly ApplicationDbContext _db;
 
+        public ShippingCompanyRepository(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public async Task<ShippingCompany> GetByName(string name)
         {
             ShippingCompany shippingCompany = await _db.ShippingCompanies.Where(x => x.Name == name).FirstOrDefaultAsync();

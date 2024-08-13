@@ -43,10 +43,17 @@ namespace VendaCorp.Infrastructure.Repository
 
         public async Task<Result> CreateAsync(DeliveryOrder salesOrder)
         {
-            salesOrder.Status = ContantsDeliveryOrder.Peding;
-            _db.DeliveryOrder.Add(salesOrder);
-            await _db.SaveChangesAsync();
-            return Result.Ok();
+            try
+            {
+                salesOrder.Status = ContantsDeliveryOrder.Peding;
+                _db.DeliveryOrder.Add(salesOrder);
+                await _db.SaveChangesAsync();
+                return Result.Ok();
+            }
+            catch
+            {
+                return Result.Fail("Erro");
+            }
         }
 
         public async Task<List<DeliveryOrder>> GetAllAsync()

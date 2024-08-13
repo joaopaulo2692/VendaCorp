@@ -24,6 +24,5 @@ namespace VendaCorp.Core.Entities
 
      
     }
-
-    
+      
 }
