@@ -79,5 +79,17 @@ namespace VendaCorp.Infrastructure.Repository
 
             return order;
         }
+
+        public async Task<Result> UpdateAsync(Order order)
+        {
+            Order orderDb = await _db.Orders.Where(x => x.Id == order.Id).FirstOrDefaultAsync();
+            if (orderDb == null) return Result.Fail("Pedido não encontrado");
+
+            orderDb.UpdatedAt = DateTime.Now;
+            orderDb.TotalAmount = order.TotalAmount;
+            await _db.SaveChangesAsync();
+
+            return Result.Ok();
+        }
     }
 }

@@ -44,7 +44,7 @@ namespace VendaCorp.Infrastructure.Data
             .HasForeignKey(x => x.OrderId);
 
 
-            modelBuilder.Entity<OrderItem>().Property(x => x.OrderId).IsRequired(true);
+            modelBuilder.Entity<OrderItem>().Property(x => x.OrderId).IsRequired(false);
             
         }
 

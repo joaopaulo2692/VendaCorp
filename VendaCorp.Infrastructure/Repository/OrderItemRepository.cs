@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,13 @@ namespace VendaCorp.Infrastructure.Repository
 
         public async Task<Result> CreateAsync(List<OrderItem> items)
         {
+            //Order orderDB = await _db.Orders.Where(x => x.Id == order.Id).FirstOrDefaultAsync();
+            //items.Order = orderDB;
+            //foreach (OrderItem item in items)
+            //{
+            //    item.Order = orderDB;
+            //}
+            //_db.OrderItems.Add(items);
             _db.OrderItems.AddRange(items);
             await _db.SaveChangesAsync();
 

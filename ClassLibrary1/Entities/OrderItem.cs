@@ -15,7 +15,7 @@ namespace VendaCorp.Core.Entities
         public int Quantity { get; set; }
         public double Price { get; set; }
 
-        [NotMapped]
+        //[NotMapped]
         public double Subtotal => Quantity * Price;
 
         public virtual Order? Order { get; set; }

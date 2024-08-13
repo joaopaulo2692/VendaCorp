@@ -20,12 +20,14 @@ namespace VendaCorp.Infrastructure.Services
         private readonly IOrderRepository _orderRepository;
         private readonly IEnterpriseRepository _enterpriseRepository;
         private readonly IProductExternApiService _productExtern;
+        private readonly IOrderItemRepository _orderItemRepository;
 
-        public OrderService(IOrderRepository orderRepository, IEnterpriseRepository enterpriseRepository, IProductExternApiService productExtern)
+        public OrderService(IOrderRepository orderRepository, IEnterpriseRepository enterpriseRepository, IProductExternApiService productExtern, IOrderItemRepository orderItemRepository)
         {
             _orderRepository = orderRepository;
             _enterpriseRepository = enterpriseRepository;
             _productExtern = productExtern;
+            _orderItemRepository = orderItemRepository;
         }
 
         public async Task<Result> ApproveAsync(string orderId)
@@ -78,25 +80,6 @@ namespace VendaCorp.Infrastructure.Services
 
 
 
-
-
-                //foreach (string product in orderCreateVO.Products)
-                //{
-                //    if (!productsExtenalString.Contains(product))
-                //    {
-                //        return Result.Fail("Produto passado não está cadastrado no sistema");
-                //    }
-                //}
-                //foreach (string productSelect in orderCreateVO.Products)
-                //{
-                //    ProductVO productVOaux = productsExternalVO.Where(x => x.Title.Trim() == productSelect.Trim()).FirstOrDefault();
-                //    totalAmount += productVOaux.Price;
-                //}
-
-           
-
-
-
                 string products = String.Join(", ", orderCreateVO.Products);
 
                 Order order = new Order()
@@ -114,13 +97,18 @@ namespace VendaCorp.Infrastructure.Services
                 if (response.IsFailed) return Result.Fail("Erro ao criar pedido");
                 string orderId = response.Successes.FirstOrDefault().Message;
 
+                Order orderCreated = await _orderRepository.GetById(orderId);
 
 
                 List<OrderItem> orderItemList = new List<OrderItem>();
+                
+              
+                 
                 foreach (Dictionary<string, int> item in orderCreateVO.Products)
                 {
                     foreach (var key in item.Keys)
                     {
+                        
                         string productName = key;
                         itemAmount += item[key];
                         ProductVO productVOaux = productsExternalVO.Where(x => x.Title.Trim() == key.Trim()).FirstOrDefault();
@@ -130,14 +118,21 @@ namespace VendaCorp.Infrastructure.Services
                             ProductName = productName,
                             Price = price,
                             Quantity = item[key],
-                            OrderId = orderId
+                            Order = orderCreated,
+                            OrderId = orderCreated.Id
                         };
+                        //Result responseOrderItem = await _orderItemRepository.CreateAsync(orderItem, orderCreated);
+                        orderCreated.TotalAmount += orderItem.Subtotal;
                         orderItemList.Add(orderItem);
                     }
                 }
+           
 
+                Result responseOrderItem = await _orderItemRepository.CreateAsync(orderItemList);
 
-                return response;
+                //Result updateOrder = await _orderRepository.UpdateAsync(orderCreated);
+
+                return responseOrderItem;
             }
             catch(Exception ex)
             {
