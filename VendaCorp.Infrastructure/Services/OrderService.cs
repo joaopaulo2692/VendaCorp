@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,11 +55,14 @@ namespace VendaCorp.Infrastructure.Services
                 {
                     Result.Fail("Não foi passado nenhum produto");
                 }
-                bool hasRepeatedNames = orderCreateVO.Products
-                 .GroupBy(name => name)
-                 .Any(group => group.Count() > 3);
+                int itemAmount = 0;
 
-                if (hasRepeatedNames) return Result.Fail("Não pode repetir o mesmo produto mais que 3 vezes");
+                
+                if (orderCreateVO.Products.Count > 3) return Result.Fail("Não pode ter mais que 3 produtos");
+
+           
+                
+                
 
                 Enterprise enterprise = await _enterpriseRepository.GetById(orderCreateVO.EnterpriseId);
 
@@ -72,26 +76,25 @@ namespace VendaCorp.Infrastructure.Services
                 
                 double totalAmount = 0;
 
-                foreach (string product in orderCreateVO.Products)
-                {
-                    if (!productsExtenalString.Contains(product))
-                    {
-                        return Result.Fail("Produto passado não está cadastrado no sistema");
-                    }
-                }
-                foreach (string productSelect in orderCreateVO.Products)
-                {
-                    ProductVO productVOaux = productsExternalVO.Where(x => x.Title.Trim() == productSelect.Trim()).FirstOrDefault();
-                    totalAmount += productVOaux.Price;
-                }
 
-                //foreach(string productValue in productsExtenalString)
+
+
+
+                //foreach (string product in orderCreateVO.Products)
                 //{
-                //    ProductVO productVOaux = productsExternalVO.Where(x => x.Title == productValue).FirstOrDefault();
+                //    if (!productsExtenalString.Contains(product))
+                //    {
+                //        return Result.Fail("Produto passado não está cadastrado no sistema");
+                //    }
+                //}
+                //foreach (string productSelect in orderCreateVO.Products)
+                //{
+                //    ProductVO productVOaux = productsExternalVO.Where(x => x.Title.Trim() == productSelect.Trim()).FirstOrDefault();
                 //    totalAmount += productVOaux.Price;
                 //}
 
-               
+           
+
 
 
                 string products = String.Join(", ", orderCreateVO.Products);
@@ -100,13 +103,39 @@ namespace VendaCorp.Infrastructure.Services
                 {
                     CustomerDocument = enterprise.Document,
                     Enterprise = enterprise,
-                    Products = products,
+                    //Products = products,
                     TotalAmount = totalAmount,
                     CustomerName = enterprise.TradeName,
                     OrderDate = DateTime.Now
                 };
 
+
                 Result response = await _orderRepository.CreateAsync(order);
+                if (response.IsFailed) return Result.Fail("Erro ao criar pedido");
+                string orderId = response.Successes.FirstOrDefault().Message;
+
+
+
+                List<OrderItem> orderItemList = new List<OrderItem>();
+                foreach (Dictionary<string, int> item in orderCreateVO.Products)
+                {
+                    foreach (var key in item.Keys)
+                    {
+                        string productName = key;
+                        itemAmount += item[key];
+                        ProductVO productVOaux = productsExternalVO.Where(x => x.Title.Trim() == key.Trim()).FirstOrDefault();
+                        double price = productsExternalVO.Where(x => x.Title.Trim() == key.Trim()).FirstOrDefault().Price;
+                        OrderItem orderItem = new OrderItem()
+                        {
+                            ProductName = productName,
+                            Price = price,
+                            Quantity = item[key],
+                            OrderId = orderId
+                        };
+                        orderItemList.Add(orderItem);
+                    }
+                }
+
 
                 return response;
             }

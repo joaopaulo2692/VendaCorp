@@ -12,7 +12,7 @@ namespace VendaCorp.Application.DTO.Order
         //public string OrderItems { get; set; }
 
         [Required(ErrorMessage = "Favor informar os produtos.")]
-        public List<string> Products { get; set; }
+        public List<Dictionary<string, int>> Products { get; set; }
 
         [Required(ErrorMessage = "Favor informar o Id da Gerencia.")]
         public int EnterpriseId { get; set; }

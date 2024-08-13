@@ -13,8 +13,8 @@ namespace VendaCorp.Core.Entities
         public int? DeliveryOrderId { get; set; }
         //public string OrderCode { get; set; }
         public DateTime OrderDate { get; set; }
-        public string? OrderItems { get; set; }
-        public string Products { get; set; }
+        //public string? OrderItems { get; set; }
+        //public string Products { get; set; }
         public double TotalAmount { get; set; }
         public string CustomerName { get; set; }
         public string CustomerDocument { get; set; }
@@ -22,6 +22,7 @@ namespace VendaCorp.Core.Entities
 
         public int EnterpriseId { get; set; }
 
+        public virtual List<OrderItem> OrderItems { get; set; }
         public virtual DeliveryOrder? DeliveryOrder { get; set; }
         public virtual Enterprise Enterprise { get; set; }
         public Order()

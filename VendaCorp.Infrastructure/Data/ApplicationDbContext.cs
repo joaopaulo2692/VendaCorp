@@ -17,6 +17,7 @@ namespace VendaCorp.Infrastructure.Data
         public DbSet<DeliveryOrder> DeliveryOrder { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Enterprise> Enterprises { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -37,7 +38,14 @@ namespace VendaCorp.Infrastructure.Data
             .WithOne(x => x.Order)
             .HasForeignKey<DeliveryOrder>(x => x.OrderId);
 
+            modelBuilder.Entity<OrderItem>()
+            .HasOne(x => x.Order)
+            .WithMany(x => x.OrderItems)
+            .HasForeignKey(x => x.OrderId);
 
+
+            modelBuilder.Entity<OrderItem>().Property(x => x.OrderId).IsRequired(true);
+            
         }
 
 

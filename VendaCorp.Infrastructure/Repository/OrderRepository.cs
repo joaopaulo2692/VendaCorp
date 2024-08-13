@@ -58,7 +58,7 @@ namespace VendaCorp.Infrastructure.Repository
                 _db.Orders.Add(order);
                 await _db.SaveChangesAsync();
 
-                return Result.Ok();
+                return Result.Ok().WithSuccess(order.Id);
             }
             catch(Exception ex)
             {

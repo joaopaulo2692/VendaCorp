@@ -37,6 +37,7 @@ builder.Services.AddScoped<IDeliveryOrderService, DeliveryOrderService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IShippingCompanyRepository, ShippingCompanyRepository>();
+builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
 
 
 var app = builder.Build();
