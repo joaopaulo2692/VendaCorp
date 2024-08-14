@@ -81,7 +81,7 @@ namespace VendaCorp.Infrastructure.Services
 
         public async Task<EnterpriseVO> GetByTradeName(string tradeName)
         {
-            Enterprise enterprise = await _enterpriseRepo.GetByLegalName(tradeName);
+            Enterprise enterprise = await _enterpriseRepo.GetByTradeName(tradeName);
             if (enterprise == null) return new EnterpriseVO();
 
             EnterpriseVO enterpriseVO = _mapper.Map<EnterpriseVO>(enterprise);

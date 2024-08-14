@@ -67,13 +67,13 @@ namespace VendaCorp.API.Controllers
                 }
 
                 Result response = await _orderService.ApproveAsync(orderId);
-                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest);
+                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest, Result.Fail("Erro ao aprovar pedido"));
 
-                return StatusCode(StatusCodes.Status200OK);
+                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao aprovar pedido"));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, Result.Fail("Erro ao aprovar pedido"));
             }
         }
         /// <summary>
@@ -94,13 +94,13 @@ namespace VendaCorp.API.Controllers
                 }
 
                 Result response = await _orderService.CancellAsync(orderId);
-                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest);
+                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest, Result.Fail("Erro ao cancelar pedido"));
 
-                return StatusCode(StatusCodes.Status200OK);
+                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao cancelar pedido"));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, Result.Fail("Erro ao cancelar pedido"));
             }
         }
         /// <summary>

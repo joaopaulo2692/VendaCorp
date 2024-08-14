@@ -120,9 +120,9 @@ namespace VendaCorp.API.Controllers
                 }
 
                 EnterpriseVO response = await _enterpriseService.GetById(id);
-                if (response == null) return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao buscar empresa por Id"));
+                if (response.LegalName == null) return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao buscar empresa por Id"));
 
-                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao buscar empresa por Id"));
+                return StatusCode(StatusCodes.Status200OK, response);
             }
             catch (Exception ex)
             {
@@ -137,7 +137,7 @@ namespace VendaCorp.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetAll")]
-        public async Task<IActionResult> GetAllAsync(int id)
+        public async Task<IActionResult> GetAllAsync()
         {
             try
             {
@@ -148,9 +148,9 @@ namespace VendaCorp.API.Controllers
                 }
 
                 List<EnterpriseVO> response = await _enterpriseService.GetAll();
-                if (response == null) return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao buscar empresas"));
+                if (response == null || response.Count == 0) return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao buscar empresas"));
 
-                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao buscar empresas"));
+                return StatusCode(StatusCodes.Status200OK, response);
             }
             catch (Exception ex)
             {
@@ -176,7 +176,7 @@ namespace VendaCorp.API.Controllers
                 }
 
                 EnterpriseVO response = await _enterpriseService.GetByLegalName(legalName);
-                if (response == null) return StatusCode(StatusCodes.Status404NotFound);
+                if (response.LegalName == null) return StatusCode(StatusCodes.Status404NotFound);
 
                 return StatusCode(StatusCodes.Status200OK, response);
             }
@@ -204,7 +204,7 @@ namespace VendaCorp.API.Controllers
                 }
 
                 EnterpriseVO response = await _enterpriseService.GetByTradeName(tradeName);
-                if (response == null) return StatusCode(StatusCodes.Status404NotFound);
+                if (response.LegalName == null) return StatusCode(StatusCodes.Status404NotFound);
 
                 return StatusCode(StatusCodes.Status200OK, response);
             }

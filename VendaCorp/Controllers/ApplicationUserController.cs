@@ -88,7 +88,7 @@ namespace VendaCorp.API.Controllers
                 }
                 List<UserVO> response = await _userService.GetAllAsync();
 
-                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao buscar todos usuário"));
+                return StatusCode(StatusCodes.Status200OK, response);
 
             }
             catch (Exception ex)
@@ -114,7 +114,7 @@ namespace VendaCorp.API.Controllers
                     return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
                 UserVO response = await _userService.GetByIdAsync(idUser);
-                if(response == null) return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao buscar usuário"));
+                if(response == null) return StatusCode(StatusCodes.Status404NotFound, response);
 
                 return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao buscar usuário"));
 
