@@ -49,6 +49,16 @@ namespace VendaCorp.Infrastructure.Services
             return response;
         }
 
+        public async Task<List<EnterpriseVO>> GetAll()
+        {
+            List<Enterprise> enterprise = await _enterpriseRepo.GetAll();
+            if (enterprise == null) return new List<EnterpriseVO>();
+
+            List<EnterpriseVO> enterpriseVO = _mapper.Map<List<EnterpriseVO>>(enterprise);
+
+            return enterpriseVO;
+        }
+
         public async Task<EnterpriseVO> GetById(int id)
         {
             Enterprise enterprise = await _enterpriseRepo.GetById(id);

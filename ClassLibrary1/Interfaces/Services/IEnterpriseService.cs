@@ -16,6 +16,7 @@ namespace VendaCorp.Core.Interfaces.Services
         public Task<Result> DisableAsync(int id);
 
         public Task<EnterpriseVO> GetById(int id);
+        public Task<List<EnterpriseVO>> GetAll();
 
         public Task<EnterpriseVO> GetByTradeName(string tradeName);
         public Task<EnterpriseVO> GetByLegalName(string LegalName);

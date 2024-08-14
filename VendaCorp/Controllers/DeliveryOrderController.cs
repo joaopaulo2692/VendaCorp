@@ -37,9 +37,9 @@ namespace VendaCorp.API.Controllers
                 //}
 
                 Result response = await _deliveryService.CreateAsync(model);
-                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest, response);
+                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest, Result.Ok("Sucesso ao criar pedido de entrega"));
 
-                return StatusCode(StatusCodes.Status201Created, response);
+                return StatusCode(StatusCodes.Status201Created, Result.Fail("Erro ao criar pedido de entrega"));
             }
             catch (Exception ex)
             {

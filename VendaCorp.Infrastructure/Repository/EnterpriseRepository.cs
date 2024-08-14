@@ -62,6 +62,13 @@ namespace VendaCorp.Infrastructure.Repository
             return Result.Ok();
         }
 
+        public async Task<List<Enterprise>> GetAll()
+        {
+            List<Enterprise> enterpriseDb = await _db.Enterprises.ToListAsync();
+
+            return enterpriseDb;
+        }
+
         public async Task<Enterprise> GetById(int id)
         {
             Enterprise enterpriseDb = await _db.Enterprises.Where(x => x.Id == id).FirstOrDefaultAsync();

@@ -37,13 +37,13 @@ namespace VendaCorp.API.Controllers
                 //}
 
                 Result response = await _enterpriseService.CreateAsync(model);
-                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest);
+                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest, Result.Fail("Erro ao criar empresa"));
 
-                return StatusCode(StatusCodes.Status201Created);
+                return StatusCode(StatusCodes.Status201Created, Result.Ok("Sucesso ao criar empresa"));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, Result.Fail("Erro ao criar empresa"));
             }
         }
 
@@ -67,11 +67,11 @@ namespace VendaCorp.API.Controllers
                 Result response = await _enterpriseService.ActivateAsync(id);
                 if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest);
 
-                return StatusCode(StatusCodes.Status201Created);
+                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao ativar empresa"));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, Result.Fail("Erro ao ativar empresa"));
             }
         }
         /// <summary>
@@ -92,13 +92,13 @@ namespace VendaCorp.API.Controllers
                 }
 
                 Result response = await _enterpriseService.DisableAsync(id);
-                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest);
+                if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest, Result.Fail("Erro ao deletar empresa"));
 
-                return StatusCode(StatusCodes.Status201Created);
+                return StatusCode(StatusCodes.Status200OK, Result.Fail("Sucesso ao deletar empresa"));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, Result.Fail("Erro ao deletar empresa"));
             }
         }
 
@@ -120,13 +120,41 @@ namespace VendaCorp.API.Controllers
                 }
 
                 EnterpriseVO response = await _enterpriseService.GetById(id);
-                if (response == null) return StatusCode(StatusCodes.Status404NotFound);
+                if (response == null) return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao buscar empresa por Id"));
 
-                return StatusCode(StatusCodes.Status200OK, response);
+                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao buscar empresa por Id"));
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError, Result.Fail("Erro ao buscar empresa por Id"));
+            }
+        }
+
+        /// <summary>
+        /// Sucesso ao buscar todas Empresas
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<IActionResult> GetAllAsync(int id)
+        {
+            try
+            {
+                Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (idUser == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
+                }
+
+                List<EnterpriseVO> response = await _enterpriseService.GetAll();
+                if (response == null) return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao buscar empresas"));
+
+                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao buscar empresas"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, Result.Fail("Erro ao buscar empresas"));
             }
         }
 

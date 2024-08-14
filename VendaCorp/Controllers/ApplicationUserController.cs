@@ -33,12 +33,12 @@ namespace VendaCorp.API.Controllers
             {
                 Result response = await _userService.CreateAsync(user);
 
-                return StatusCode(StatusCodes.Status201Created, response);
+                return StatusCode(StatusCodes.Status201Created, Result.Ok("Sucesso ao criar usuário"));
 
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status404NotFound);
+                return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao criar usuário"));
             }
         }
 
@@ -61,12 +61,12 @@ namespace VendaCorp.API.Controllers
                 }
                 Result response = await _userService.DeleteAsync(idUser);
 
-                return StatusCode(StatusCodes.Status200OK, response);
+                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao deletar usuário"));
 
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status404NotFound);
+                return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao deletar usuário"));
             }
         }
 
@@ -88,12 +88,12 @@ namespace VendaCorp.API.Controllers
                 }
                 List<UserVO> response = await _userService.GetAllAsync();
 
-                return StatusCode(StatusCodes.Status200OK, response);
+                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao buscar todos usuário"));
 
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status404NotFound);
+                return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao buscar todos usuário"));
             }
         }
         /// <summary>
@@ -114,13 +114,14 @@ namespace VendaCorp.API.Controllers
                     return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
                 UserVO response = await _userService.GetByIdAsync(idUser);
+                if(response == null) return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao buscar usuário"));
 
-                return StatusCode(StatusCodes.Status200OK, response);
+                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao buscar usuário"));
 
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status404NotFound);
+                return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao buscar usuário"));
             }
         }
 
@@ -137,13 +138,14 @@ namespace VendaCorp.API.Controllers
             try
             {
                 Result response = await _userService.Login(loginVO);
+                if(response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest, Result.Fail("Erro ao fazer login"));
 
-                return StatusCode(StatusCodes.Status200OK, response);
+                return StatusCode(StatusCodes.Status200OK, Result.Ok("Sucesso ao fazer login"));
 
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status404NotFound);
+                return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Erro ao fazer login"));
             }
         }
 
