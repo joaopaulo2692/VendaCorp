@@ -114,5 +114,51 @@ namespace VendaCorp.API.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            try
+            {
+                Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (idUser == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
+                }
+
+                List<Order> response = await _orderService.GetAll();
+                if (response == null) return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Nenhum pedido localizado"));
+
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, Result.Fail("Erro ao buscar todos os pedidos"));
+            }
+        }
+
+        [HttpGet]
+        [Route("GetAllFilteredByAmount")]
+        public async Task<IActionResult> GetAllFilteredByAmountAsync(int amount)
+        {
+            try
+            {
+                Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                if (idUser == null)
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
+                }
+
+                List<Order> response = await _orderService.GetAllFilteredAmount(amount);
+                if (response == null) return StatusCode(StatusCodes.Status404NotFound, Result.Fail("Nenhum pedido localizado"));
+
+                return StatusCode(StatusCodes.Status200OK, response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, Result.Fail("Erro ao buscar todos os pedidos filtrado"));
+            }
+        }
+
     }
 }

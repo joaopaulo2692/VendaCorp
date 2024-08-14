@@ -148,6 +148,15 @@ namespace VendaCorp.Infrastructure.Services
             return orders;
         }
 
+        public async Task<List<Order>> GetAllFilteredAmount(int amount)
+        {
+            List<Order> orders = await _orderRepository.GetAll();
+            List<Order> limitedOrders = orders.Take(amount).ToList();
+
+            return limitedOrders;
+
+        }
+
         public async Task<Order> GetById(string id)
         {
             Order order = await _orderRepository.GetById(id);
