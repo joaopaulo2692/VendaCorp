@@ -51,7 +51,7 @@ namespace VendaCorp.API.Controllers
         /// Método que busca todos Pedido de entrega
         /// </summary>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("GetAll")]
         public async Task<IActionResult> GetAllAsync()
         {
