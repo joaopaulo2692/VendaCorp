@@ -11,6 +11,7 @@ namespace VendaCorp.Core.Interfaces.Repositories
     public interface IDeliveryOrderRepository
     {
         public Task<List<DeliveryOrder>> GetAllAsync();
+        public Task<DeliveryOrder> GetByIdAsync(int deliveryId);
         public Task<Result> CreateAsync(DeliveryOrder salesOrder);
         public Task<Result> DeliveredAsync(DeliveryOrder salesOrder);
         public Task<Result> OnTheWayAsync(DeliveryOrder salesOrder);

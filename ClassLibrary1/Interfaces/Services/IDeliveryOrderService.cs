@@ -11,7 +11,7 @@ namespace VendaCorp.Core.Interfaces.Services
 {
     public interface IDeliveryOrderService
     {
-        public Task<List<DeliveryOrderCreateVO>> GetAllAsync();
+        public Task<List<DeliveryOrder>> GetAllAsync();
         public Task<Result> CreateAsync(DeliveryOrderCreateVO delivery);
         public Task<Result> DeliveredAsync(int deliveryId);
         public Task<Result> OnTheWayAsync(int deliveryId);

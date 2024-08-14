@@ -53,19 +53,35 @@ namespace VendaCorp.Infrastructure.Services
 
         }
 
-        public Task<Result> DeliveredAsync(int deliveryId)
+        public async Task<Result> DeliveredAsync(int deliveryId)
         {
-            throw new NotImplementedException();
+            DeliveryOrder deliveryOrder = await _deliveryRepo.GetByIdAsync(deliveryId);
+            if (deliveryOrder == null) return Result.Fail("Pedido de entrega não localizado");
+
+            if (deliveryOrder.Status != ContantsDeliveryOrder.OnTheWay) return Result.Fail("Pedido cancelado ou ainda não foi passado pela 'etapa a caminho'");
+
+            Result delivered = await _deliveryRepo.DeliveredAsync(deliveryOrder);
+
+            return delivered;
         }
 
-        public Task<List<DeliveryOrderCreateVO>> GetAllAsync()
+        public async Task<List<DeliveryOrder>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            List<DeliveryOrder> deliveryOrders = await _deliveryRepo.GetAllAsync();
+
+            return deliveryOrders;
         }
 
-        public Task<Result> OnTheWayAsync(int deliveryId)
+        public async Task<Result> OnTheWayAsync(int deliveryId)
         {
-            throw new NotImplementedException();
+            DeliveryOrder deliveryOrder = await _deliveryRepo.GetByIdAsync(deliveryId);
+            if (deliveryOrder == null) return Result.Fail("Pedido de entrega não localizado");
+
+            if (deliveryOrder.Status != ContantsDeliveryOrder.Peding) return Result.Fail("Pedido cancelado ou já está a caminho");
+
+            Result delivered = await _deliveryRepo.OnTheWayAsync(deliveryOrder);
+
+            return delivered;
         }
     }
 }

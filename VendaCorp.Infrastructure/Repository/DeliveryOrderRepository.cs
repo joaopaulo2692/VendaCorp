@@ -62,5 +62,12 @@ namespace VendaCorp.Infrastructure.Repository
 
             return deliveryOrders;
         }
+
+        public async Task<DeliveryOrder> GetByIdAsync(int deliveryId)
+        {
+            DeliveryOrder deliveryOrder = await _db.DeliveryOrder.Where(x => x.Id == deliveryId).FirstOrDefaultAsync();
+
+            return deliveryOrder;
+        }
     }
 }
