@@ -5,6 +5,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <NoWarn>$(NoWarn);1591</NoWarn>
+	  <!-- Opcional, para suprimir warnings sobre comentários faltando -->
+	  <DocumentationFile>bin\Debug\net8.0\VendaCorp.API.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

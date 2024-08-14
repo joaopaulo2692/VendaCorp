@@ -23,7 +23,7 @@ namespace VendaCorp.API.Controllers
         }
 
         /// <summary>
-        /// Métdo que cria o Pedido
+        /// Método que cria o Pedido
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
