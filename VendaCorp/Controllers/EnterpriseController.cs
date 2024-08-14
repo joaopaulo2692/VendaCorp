@@ -19,7 +19,11 @@ namespace VendaCorp.API.Controllers
         {
             _enterpriseService = enterpriseService;
         }
-
+        /// <summary>
+        /// Método que cria Empresa
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> CreateAsync([FromBody] EnterpriseVO model)
@@ -43,6 +47,11 @@ namespace VendaCorp.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Método que Muda Status da Empresa para "Ativo"
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Activate")]
         public async Task<IActionResult> ActivateAsync(int id)
@@ -65,7 +74,11 @@ namespace VendaCorp.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        /// <summary>
+        /// Método que Muda Status da Empresa para "Inativo"
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Disable")]
         public async Task<IActionResult> DisableAsync(int id)
@@ -89,7 +102,11 @@ namespace VendaCorp.API.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Método que busca Empresa pelo ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetById")]
         public async Task<IActionResult> GetByIdAsync(int id)
@@ -113,7 +130,11 @@ namespace VendaCorp.API.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Método que busca Empresa pela Razão Social
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetByLegalName")]
         public async Task<IActionResult> GetByLegalNameAsync(string legalName)
@@ -137,6 +158,11 @@ namespace VendaCorp.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Método que busca Empresa pelo nome Fantasia
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetByTradeName")]
         public async Task<IActionResult> GetByTradeNameAsync(string tradeName)

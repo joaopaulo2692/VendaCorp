@@ -16,7 +16,7 @@ namespace VendaCorp.Core.Interfaces.Services
         public Task<Result> CancellAsync(string orderId);
         public Task<Order> GetById(string id);
         public Task<List<Order>> GetAll();
-        public Task<List<Order>> GetAllFilteredAmount(int amount)
+        public Task<List<Order>> GetAllFilteredAmount(int amount);
 
     }
 }

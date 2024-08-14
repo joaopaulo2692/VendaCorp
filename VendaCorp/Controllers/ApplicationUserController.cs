@@ -18,6 +18,12 @@ namespace VendaCorp.API.Controllers
             _userService = userService;
         }
 
+
+        /// <summary>
+        /// Método que cria novo Usuário
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Save")]
         public async Task<IActionResult> SaveUser([FromBody] UserCreateVO user)
@@ -36,6 +42,11 @@ namespace VendaCorp.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Método que deleta Usuário
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Delete")]
         public async Task<IActionResult> DeleteUser(string idUser)
@@ -59,6 +70,10 @@ namespace VendaCorp.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Método que busca todos os Usuários
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()
@@ -81,7 +96,11 @@ namespace VendaCorp.API.Controllers
                 return StatusCode(StatusCodes.Status404NotFound);
             }
         }
-
+        /// <summary>
+        /// Método para buscar Usuários por Id
+        /// </summary>
+        /// <param name="idUser"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetById")]
         public async Task<IActionResult> GetById(string idUser)
@@ -105,6 +124,11 @@ namespace VendaCorp.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Método para Fazer Autenticação
+        /// </summary>
+        /// <param name="loginVO"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Login")]
         public async Task<IActionResult> Login([FromBody] LoginVO loginVO)

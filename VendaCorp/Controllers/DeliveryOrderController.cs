@@ -19,6 +19,11 @@ namespace VendaCorp.API.Controllers
             _deliveryService = deliveryService;
         }
 
+        /// <summary>
+        /// Método que cria o o Pedido de Entrega
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> CreateAsync([FromBody] DeliveryOrderCreateVO model)
@@ -42,6 +47,10 @@ namespace VendaCorp.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Método que busca todos Pedido de entrega
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("GetAll")]
         public async Task<IActionResult> GetAllAsync()
@@ -66,6 +75,11 @@ namespace VendaCorp.API.Controllers
         }
 
 
+        /// <summary>
+        /// Método que muda Status de Pedido de Entrega para "A caminho"
+        /// </summary>
+        /// <param name="deliveryId"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("StatusOnTheWay")]
         public async Task<IActionResult> StatusOnTheWayAsync(int deliveryId)
@@ -90,6 +104,11 @@ namespace VendaCorp.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Método que muda Status de Pedido de Entrega para "Entregue"
+        /// </summary>
+        /// <param name="deliveryId"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("StatusDelivered")]
         public async Task<IActionResult> StatusDeliveredAsync(int deliveryId)

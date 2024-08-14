@@ -15,6 +15,10 @@ namespace VendaCorp.API.Controllers
             _productExtern = productExtern;
         }
 
+        /// <summary>
+        /// Método que retorna todos os produtos da API externa
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAll")]
         public async Task<IActionResult> GetAll()

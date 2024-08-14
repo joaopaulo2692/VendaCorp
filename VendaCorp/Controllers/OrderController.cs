@@ -22,6 +22,11 @@ namespace VendaCorp.API.Controllers
             _orderService = orderService;
         }
 
+        /// <summary>
+        /// Métdo que cria o Pedido
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Create")]
         public async Task<IActionResult> CreateAsync([FromBody] OrderCreateVO model)
@@ -44,7 +49,11 @@ namespace VendaCorp.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        /// <summary>
+        /// Método que muda o Status para "Aprovado"
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("ApprovedAsync")]
         public async Task<IActionResult> ApproveAsync(string orderId)
@@ -67,7 +76,11 @@ namespace VendaCorp.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        /// <summary>
+        /// Método que muda Status do Pedido para "Cancelado"
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("CancellAsync")]
         public async Task<IActionResult> CancellAsync(string orderId)
@@ -90,7 +103,11 @@ namespace VendaCorp.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        /// <summary>
+        /// Método que busca Pedidos por Id
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetById")]
         public async Task<IActionResult> GetByIdAsync(string orderId)
@@ -113,7 +130,10 @@ namespace VendaCorp.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-
+        /// <summary>
+        /// Método que busca todos os pedidos
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAll")]
         public async Task<IActionResult> GetAllAsync()
@@ -136,7 +156,11 @@ namespace VendaCorp.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, Result.Fail("Erro ao buscar todos os pedidos"));
             }
         }
-
+        /// <summary>
+        /// Método uqe busca todos os pedidos filtrando por quantidade
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetAllFilteredByAmount")]
         public async Task<IActionResult> GetAllFilteredByAmountAsync(int amount)
