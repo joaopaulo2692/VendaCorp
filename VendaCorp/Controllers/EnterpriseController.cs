@@ -26,7 +26,7 @@ namespace VendaCorp.API.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> CreateAsync([FromBody] EnterpriseVO model)
+        public async Task<IActionResult> CreateAsync([FromBody] EnterpriseCreateVO model)
         {
             try
             {

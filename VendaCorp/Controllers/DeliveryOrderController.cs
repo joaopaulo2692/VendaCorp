@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using VendaCorp.Application.DTO.DeliveryOrder;
 using VendaCorp.Application.DTO.Enterprise;
+using VendaCorp.Core.ConstantsMessage;
 using VendaCorp.Core.Entities;
 using VendaCorp.Core.Interfaces.Services;
 
@@ -60,7 +61,7 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 List<DeliveryOrder> deliveries = await _deliveryService.GetAllAsync();
@@ -89,13 +90,13 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 Result response = await _deliveryService.OnTheWayAsync(deliveryId);
                 if(response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest, Result.Fail("Erro ao mudar status da entrega para 'A caminho'!"));
 
-                return StatusCode(StatusCodes.Status200OK, response);
+                return StatusCode(StatusCodes.Status200OK, "Pedido a caminho");
             }
             catch (Exception ex)
             {
@@ -118,13 +119,13 @@ namespace VendaCorp.API.Controllers
                 Claim idUser = User.FindFirst(ClaimTypes.NameIdentifier);
                 if (idUser == null)
                 {
-                    return StatusCode(StatusCodes.Status401Unauthorized);
+                    return StatusCode(StatusCodes.Status401Unauthorized, ConstantsAuthorized.Error);
                 }
 
                 Result response = await _deliveryService.DeliveredAsync(deliveryId);
                 if (response.IsFailed) return StatusCode(StatusCodes.Status400BadRequest, Result.Fail("Erro ao mudar status da entrega para 'Entregue'!"));
 
-                return StatusCode(StatusCodes.Status200OK, response);
+                return StatusCode(StatusCodes.Status200OK, "Pedido entregue");
             }
             catch (Exception ex)
             {

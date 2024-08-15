@@ -18,6 +18,9 @@ namespace VendaCorp.Core.Profiles
 
             CreateMap<EnterpriseVO, Enterprise>()
                 .ReverseMap();
+
+            CreateMap<EnterpriseCreateVO, Enterprise>()
+               .ReverseMap();
         }
     }
 }

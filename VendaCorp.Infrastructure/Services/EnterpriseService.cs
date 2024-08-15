@@ -32,7 +32,7 @@ namespace VendaCorp.Infrastructure.Services
             return response;
         }
 
-        public async Task<Result> CreateAsync(EnterpriseVO enterpriseVO)
+        public async Task<Result> CreateAsync(EnterpriseCreateVO enterpriseVO)
         {
             Enterprise enterprise = _mapper.Map<Enterprise>(enterpriseVO);
             Result response = await  _enterpriseRepo.CreateAsync(enterprise);

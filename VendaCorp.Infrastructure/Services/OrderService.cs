@@ -59,8 +59,11 @@ namespace VendaCorp.Infrastructure.Services
                 }
                 int itemAmount = 0;
 
-                
-                if (orderCreateVO.Products.Count > 3) return Result.Fail("Não pode ter mais que 3 produtos");
+                int items = orderCreateVO.Products
+                                 .SelectMany(dict => dict.Values)
+                                 .Sum();
+
+                if (items > 3) return Result.Fail("Não pode ter mais que 3 produtos");
 
            
                 
@@ -116,7 +119,7 @@ namespace VendaCorp.Infrastructure.Services
                         OrderItem orderItem = new OrderItem()
                         {
                             ProductName = productName,
-                            Price = price,
+                            Price = price * item[key],
                             Quantity = item[key],
                             Order = orderCreated,
                             OrderId = orderCreated.Id

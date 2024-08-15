@@ -11,7 +11,7 @@ namespace VendaCorp.Core.Interfaces.Services
 {
     public interface IEnterpriseService
     {
-        public Task<Result> CreateAsync(EnterpriseVO enterprise);
+        public Task<Result> CreateAsync(EnterpriseCreateVO enterprise);
         public Task<Result> ActivateAsync(int id);
         public Task<Result> DisableAsync(int id);
 
