@@ -1,0 +1,42 @@
+Explique a diferença entre valor e referência em C#.
+Tipos de Valor(int, float, bool) guardam o dado diretamente, já tipos de referêcia(string, array, classe),
+guardam o endereço.
+
+
+Como é o funcionamento do garbage collector em C#?
+O Garbage Collector gerencia a memória automaticamente. Ele aloca na memória, identifica o que não está usando
+e faz a "coleta do lixo".
+
+O que é uma interface em C# e como ela difere de uma classe abstrata?
+Ambas são contratos, porém a interface não tem implementação de métodos, a classe abstrata tem.
+Uma classe pode implementar várias interfaces e uma classe pode herdar somente uma classe abstrata.
+
+O que são métodos assíncronos em C#? Como você usaria async e await?
+Métodos assíncronos permitem que o código continue executando enquanto aguarda operações demoradas, melhorando a responsividade, e evitando erros.
+
+Como funciona a injeção de dependência no ASP.NET Core.
+É feita geralmente através de Interfaces, onde na classe a ser utilizada é adicionada no construtor, para
+que use as suas funcionalidades que essa interface propõe.
+E para usar deve ser injetado na classe Program, como um Serviço.
+
+Como você lida com exceções em C#? Quais são as melhores práticas para tratamento de erros?
+Em geral utilizo o try/catch onde tem mais chance de acontecer o erro. Além disso uso o "Result" da FluentResults, para criar uma forma de lidar com os erros.
+
+
+Descreva como você implementaria um CQRS pattern em um sistema .NET.
+Nunca utilizei CQRS, o pouco que sei é que é para melhorar a escalabilidade e a separação das responsabilidades.
+
+
+O que é DDD e como ele se aplica ao desenvolvimento com C#?
+É uma forma de desenvolvimento de software para criar toda a regra de negocio no domínio, fazendo com que toda
+regra fique em um lugar. Em geral é usado em projetos grandes.
+
+Quais problemas de performance que podem surgir com seu uso inadequado de async/await.
+Pode levar a problemas como criação excessiva de tarefas, inconsistências no uso etc.
+
+Quais são os benefícios e desvantagens de usar o Entity Framework em um projeto .NET?
+Beneficios : 
+A praticidade, pois é muito simples de se fazer desde as relações entre as entidades, a criação e manipulação do banco de dados, a utilização do Linq que é uma ferramenta poderosa do C#.
+Desvantagens:
+Em geral é falado de sua performance em queries mais complexas, porém em todos os projetos que já mexi, não senti nenhum
+impacto por usar o EF.
