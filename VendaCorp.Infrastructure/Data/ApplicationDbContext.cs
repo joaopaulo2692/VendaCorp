@@ -45,7 +45,19 @@ namespace VendaCorp.Infrastructure.Data
 
 
             modelBuilder.Entity<OrderItem>().Property(x => x.OrderId).IsRequired(false);
-            
+
+            modelBuilder.Entity<ShippingCompany>().HasData(
+                new ShippingCompany
+                {
+                    Name = "csharplog"
+                },
+                new ShippingCompany
+                {
+                    Name = "javalog"
+                }
+            );
+
+
         }
 
 
