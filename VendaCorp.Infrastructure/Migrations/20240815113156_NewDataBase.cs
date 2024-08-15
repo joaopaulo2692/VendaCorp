@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace VendaCorp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateNewDataBase : Migration
+    public partial class NewDataBase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -67,6 +69,7 @@ namespace VendaCorp.Infrastructure.Migrations
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Activate = table.Column<bool>(type: "bit", nullable: false),
+                    Document = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updated_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     disabled_at = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -200,16 +203,13 @@ namespace VendaCorp.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    DeliveryOrderId = table.Column<int>(type: "int", nullable: false),
+                    DeliveryOrderId = table.Column<int>(type: "int", nullable: true),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderItems = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Products = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TotalAmount = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalAmount = table.Column<double>(type: "float", nullable: false),
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerDocument = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EnterpriseId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EnterpriseId1 = table.Column<int>(type: "int", nullable: false),
+                    EnterpriseId = table.Column<int>(type: "int", nullable: false),
                     created_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     updated_at = table.Column<DateTime>(type: "datetime2", nullable: false),
                     disabled_at = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -218,8 +218,8 @@ namespace VendaCorp.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Enterprises_EnterpriseId1",
-                        column: x => x.EnterpriseId1,
+                        name: "FK_Orders_Enterprises_EnterpriseId",
+                        column: x => x.EnterpriseId,
                         principalTable: "Enterprises",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -233,10 +233,9 @@ namespace VendaCorp.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ShippningCompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShippingCompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ShippningCompanyId = table.Column<int>(type: "int", nullable: false),
                     ShippingCompanyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -254,6 +253,36 @@ namespace VendaCorp.Infrastructure.Migrations
                         principalTable: "ShippingCompanies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "ShippingCompanies",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "csharplog" },
+                    { 2, "javalog" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -307,9 +336,14 @@ namespace VendaCorp.Infrastructure.Migrations
                 column: "ShippingCompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_EnterpriseId1",
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_EnterpriseId",
                 table: "Orders",
-                column: "EnterpriseId1");
+                column: "EnterpriseId");
         }
 
         /// <inheritdoc />
@@ -334,16 +368,19 @@ namespace VendaCorp.Infrastructure.Migrations
                 name: "DeliveryOrder");
 
             migrationBuilder.DropTable(
+                name: "OrderItems");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "ShippingCompanies");
 
             migrationBuilder.DropTable(
-                name: "ShippingCompanies");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Enterprises");

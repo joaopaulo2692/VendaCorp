@@ -423,6 +423,18 @@ namespace VendaCorp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ShippingCompanies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "csharplog"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "javalog"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -49,10 +49,12 @@ namespace VendaCorp.Infrastructure.Data
             modelBuilder.Entity<ShippingCompany>().HasData(
                 new ShippingCompany
                 {
+                    Id = 1,
                     Name = "csharplog"
                 },
                 new ShippingCompany
                 {
+                    Id = 2,
                     Name = "javalog"
                 }
             );

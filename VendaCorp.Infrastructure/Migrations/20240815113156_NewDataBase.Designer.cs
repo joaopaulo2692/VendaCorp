@@ -12,8 +12,8 @@ using VendaCorp.Infrastructure.Data;
 namespace VendaCorp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240813112722_NewTableOrderItem")]
-    partial class NewTableOrderItem
+    [Migration("20240815113156_NewDataBase")]
+    partial class NewDataBase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -392,7 +392,6 @@ namespace VendaCorp.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("OrderId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("Price")
@@ -427,6 +426,18 @@ namespace VendaCorp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ShippingCompanies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "csharplog"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "javalog"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -514,9 +525,7 @@ namespace VendaCorp.Infrastructure.Migrations
                 {
                     b.HasOne("VendaCorp.Core.Entities.Order", "Order")
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("OrderId");
 
                     b.Navigation("Order");
                 });
